@@ -1,0 +1,8 @@
+case = $builddir/advect
+dict = src/blockMeshDict-schaer
+tracerFieldDict = src/tracerFieldDict-schaerRadial
+velocityFieldDict = src/velocityFieldDict-schaerHorizontal
+fvSchemes = src/fvSchemes-linearUpwind
+
+subninja ninja/templates/advect.ninja
+

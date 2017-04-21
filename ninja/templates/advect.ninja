@@ -1,18 +1,22 @@
-case = $builddir/advection
 endTime = 10000
+#case
+#tracerFieldDict
+#velocityFieldDict
+#fvSchemes
+
 tracer = T
 flux = phi
 
 rule advect
-  command = advectionFoam -case $case -heun2
+  command = advectionFoam -case $case -heun2 > $case/advect.log
   description = Advect
 
 rule setInitialTracerField
-  command = setInitialTracerField -case $case
+  command = setInitialTracerField -case $case > $case/setInitialTracerField.log
   description = Set initial tracer field
 
 rule setVelocityField
-  command = setVelocityField -case $case
+  command = setVelocityField -case $case > $case/setVelocityField.log
   description = Set velocity field
 
 build $
@@ -59,11 +63,11 @@ build $case/constant/polyMesh/owner: cp build/mesh/constant/polyMesh/owner
 build $case/constant/polyMesh/neighbour: cp build/mesh/constant/polyMesh/neighbour
 build $case/constant/polyMesh/boundary: cp build/mesh/constant/polyMesh/boundary
 
-build $case/system/fvSchemes: cp src/fvSchemes-linearUpwind | $case/system/commonFvSchemes
+build $case/system/fvSchemes: cp $fvSchemes | $case/system/commonFvSchemes
 build $case/system/commonFvSchemes: cp src/fvSchemes-common
 build $case/system/fvSolution: cp src/fvSolution
 build $case/system/controlDict: cp src/controlDict-advection
 
 build $case/constant/T_init: cp src/T_init
-build $case/system/tracerFieldDict: cp src/tracerFieldDict-schaerRadial
-build $case/system/velocityFieldDict: cp src/velocityFieldDict-schaerHorizontal
+build $case/system/tracerFieldDict: cp $tracerFieldDict
+build $case/system/velocityFieldDict: cp $velocityFieldDict
