@@ -1,0 +1,17 @@
+case = $builddir/mesh
+
+rule blockMesh
+  command = blockMesh -case $case
+
+build $
+$case/constant/polyMesh/points $
+$case/constant/polyMesh/faces $
+$case/constant/polyMesh/owner $
+$case/constant/polyMesh/neighbour $
+$case/constant/polyMesh/boundary: $
+blockMesh $
+$case/system/blockMeshDict $
+$case/system/controlDict
+
+build $case/system/blockMeshDict: cp src/blockMeshDict-schaer
+build $case/system/controlDict: cp src/controlDict-general

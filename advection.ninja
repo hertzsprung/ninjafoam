@@ -1,0 +1,69 @@
+case = $builddir/advection
+endTime = 10000
+tracer = T
+flux = phi
+
+rule advect
+  command = advectionFoam -case $case -heun2
+  description = Advect
+
+rule setInitialTracerField
+  command = setInitialTracerField -case $case
+  description = Set initial tracer field
+
+rule setVelocityField
+  command = setVelocityField -case $case
+  description = Set velocity field
+
+build $
+$case/$endTime/$tracer: advect $
+$case/0/$tracer $
+$case/0/$flux $
+$case/constant/polyMesh/points $
+$case/constant/polyMesh/faces $
+$case/constant/polyMesh/owner $
+$case/constant/polyMesh/neighbour $
+$case/constant/polyMesh/boundary $
+$case/system/fvSchemes $
+$case/system/fvSolution $
+$case/system/controlDict
+
+build $case/0/$tracer: $
+setInitialTracerField $
+$case/constant/polyMesh/points $
+$case/constant/polyMesh/faces $
+$case/constant/polyMesh/owner $
+$case/constant/polyMesh/neighbour $
+$case/constant/polyMesh/boundary $
+$case/system/fvSchemes $
+$case/system/fvSolution $
+$case/system/controlDict $
+$case/constant/T_init $
+$case/system/tracerFieldDict
+
+build $case/0/$flux: $
+setVelocityField $
+$case/constant/polyMesh/points $
+$case/constant/polyMesh/faces $
+$case/constant/polyMesh/owner $
+$case/constant/polyMesh/neighbour $
+$case/constant/polyMesh/boundary $
+$case/system/fvSchemes $
+$case/system/fvSolution $
+$case/system/controlDict $
+$case/system/velocityFieldDict
+
+build $case/constant/polyMesh/points: cp build/mesh/constant/polyMesh/points
+build $case/constant/polyMesh/faces: cp build/mesh/constant/polyMesh/faces
+build $case/constant/polyMesh/owner: cp build/mesh/constant/polyMesh/owner
+build $case/constant/polyMesh/neighbour: cp build/mesh/constant/polyMesh/neighbour
+build $case/constant/polyMesh/boundary: cp build/mesh/constant/polyMesh/boundary
+
+build $case/system/fvSchemes: cp src/fvSchemes-linearUpwind | $case/system/commonFvSchemes
+build $case/system/commonFvSchemes: cp src/fvSchemes-common
+build $case/system/fvSolution: cp src/fvSolution
+build $case/system/controlDict: cp src/controlDict-advection
+
+build $case/constant/T_init: cp src/T_init
+build $case/system/tracerFieldDict: cp src/tracerFieldDict-schaerRadial
+build $case/system/velocityFieldDict: cp src/velocityFieldDict-schaerHorizontal
