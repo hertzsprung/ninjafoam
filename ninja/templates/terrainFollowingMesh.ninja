@@ -1,0 +1,21 @@
+#case
+#mesh
+#dict
+
+rule terrainFollowingMesh
+  command = rsync -ru -delete $mesh/constant/polyMesh $case/constant && $
+            terrainFollowingMesh -case $case > $case/terrainFollowingMesh.log
+  description = Create terrain following mesh
+
+build $
+$case/constant/polyMesh/points $
+$case/constant/polyMesh/faces $
+$case/constant/polyMesh/owner $
+$case/constant/polyMesh/neighbour $
+$case/constant/polyMesh/boundary $
+: terrainFollowingMesh $
+$case/system/mountainDict $
+$case/system/controlDict
+
+build $case/system/mountainDict: cp $dict
+build $case/system/controlDict: cp src/controlDict-general

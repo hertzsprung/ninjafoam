@@ -3,5 +3,6 @@ builddir = build
 rule cp
   command = cp $in $out
 
-subninja mesh.ninja
+subninja ninja/mesh.noTerrain.ninja
+subninja ninja/mesh.btf.ninja
 subninja advect.ninja

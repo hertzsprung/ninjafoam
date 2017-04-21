@@ -1,4 +1,4 @@
-case = $builddir/mesh
+case = $builddir/mesh.noTerrain
 dict = src/blockMeshDict-schaer
 
 subninja ninja/templates/blockMesh.ninja

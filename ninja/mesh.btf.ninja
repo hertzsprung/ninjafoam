@@ -1,0 +1,6 @@
+case = $builddir/mesh.btf
+mesh = $builddir/mesh.noTerrain
+dict = src/mountainDict-btf
+
+subninja ninja/templates/terrainFollowingMesh.ninja
+

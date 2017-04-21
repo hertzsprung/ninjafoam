@@ -1,5 +1,6 @@
 endTime = 10000
 #case
+#mesh
 #tracerFieldDict
 #velocityFieldDict
 #fvSchemes
@@ -57,11 +58,11 @@ $case/system/fvSolution $
 $case/system/controlDict $
 $case/system/velocityFieldDict
 
-build $case/constant/polyMesh/points: cp build/mesh/constant/polyMesh/points
-build $case/constant/polyMesh/faces: cp build/mesh/constant/polyMesh/faces
-build $case/constant/polyMesh/owner: cp build/mesh/constant/polyMesh/owner
-build $case/constant/polyMesh/neighbour: cp build/mesh/constant/polyMesh/neighbour
-build $case/constant/polyMesh/boundary: cp build/mesh/constant/polyMesh/boundary
+build $case/constant/polyMesh/points: cp $mesh/constant/polyMesh/points
+build $case/constant/polyMesh/faces: cp $mesh/constant/polyMesh/faces
+build $case/constant/polyMesh/owner: cp $mesh/constant/polyMesh/owner
+build $case/constant/polyMesh/neighbour: cp $mesh/constant/polyMesh/neighbour
+build $case/constant/polyMesh/boundary: cp $mesh/constant/polyMesh/boundary
 
 build $case/system/fvSchemes: cp $fvSchemes | $case/system/commonFvSchemes
 build $case/system/commonFvSchemes: cp src/fvSchemes-common

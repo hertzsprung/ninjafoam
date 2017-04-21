@@ -3,6 +3,7 @@
 
 rule blockMesh
   command = blockMesh -case $case > $case/blockMesh.log
+  description = Create block mesh
 
 build $
 $case/constant/polyMesh/points $
