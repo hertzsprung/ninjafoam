@@ -14,6 +14,11 @@ $case/constant/polyMesh/owner $
 $case/constant/polyMesh/neighbour $
 $case/constant/polyMesh/boundary $
 : terrainFollowingMesh $
+$mesh/constant/polyMesh/points $
+$mesh/constant/polyMesh/faces $
+$mesh/constant/polyMesh/owner $
+$mesh/constant/polyMesh/neighbour $
+$mesh/constant/polyMesh/boundary $
 $case/system/mountainDict $
 $case/system/controlDict
 
